@@ -1,23 +1,41 @@
 "use strict";
 
-const quiestion = 'Сколько фильмов вы уже посмотрели?';
-const answer = prompt(quiestion, '');
+const questionHowMuch = 'Сколько фильмов вы уже посмотрели?';
+const questionWhich = 'Один из последних просмотренных фильмов?';
+const questionMark = 'На сколько оцените его?';
 
 const personalMovieDB = {
-    count: +answer,
+    count: undefined,
     movies: {},
     actors: {},
     genres: [],
     privat: false
 };
 
-const quiestion2 = 'Один из последних просмотренных фильмов?';
-const quiestion3 = 'На сколько оцените его?';
+let howMuchAnswer;
 
-const a = prompt(quiestion2, ''),
-      b = prompt(quiestion3, ''),
-      c = prompt(quiestion2, ''),
-      d = prompt(quiestion3, '');
+do {
+    howMuchAnswer = prompt(questionHowMuch, '');
+} while(['', null].indexOf(howMuchAnswer) !== -1);
 
-personalMovieDB.movies[a] = b;
-personalMovieDB.movies[c] = d;
+personalMovieDB.count = +howMuchAnswer;
+
+console.log(personalMovieDB.count < 10 ? 'Просмотрено довольно мало фильмов' : 
+personalMovieDB.count < 30 ? 'Вы классический зритель' : 
+personalMovieDB.count > 30 ? 'Вы киноман' : 'Произошла ошибка');
+
+for(let i = 0; i < personalMovieDB.count; i++) {
+    let questionWhichAnswer;
+
+    do {
+        questionWhichAnswer = prompt(questionWhich, '');
+    } while(['', null].indexOf(questionWhichAnswer) !== -1 || questionWhichAnswer.length > 50);
+
+    let questionMarkAnswer;
+
+    do {
+        questionMarkAnswer = prompt(questionMark, '');
+    } while(['', null].indexOf(questionMarkAnswer) !== -1 || questionMarkAnswer.length > 50);
+    
+    personalMovieDB.movies[questionWhichAnswer] = questionMarkAnswer;
+}
